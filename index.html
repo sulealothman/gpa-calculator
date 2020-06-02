@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+    <!--
+		/**
+		 *
+		 * Author Suleiman Al-Othman (@sulealothman)
+		 * GPA Calculator (University)
+		 * Version 1.0
+		 *
+		 **/
+	 -->
+    <head>
+        <meta charset="UTF-8">
+
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>حساب المُعدل الفصلي و التراكمي | @sulealothman</title>
+
+        <link rel="stylesheet" href="assets/bootstrap/bootstrap.min.css">
+        <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
+        <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
+        <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet">
+        <style>
+            html,
+            body {
+                font-family: 'Tajawal', sans-serif;
+            }
+        </style>
+    </head>
+    <body>
+        
+        <div class="container text-right shadow p-4">
+
+            <div class="row py-4 shadow-sm">
+                <div class="col-12 col-sm-12 col-md-6">
+                    <h4 class="text-center pb-3">
+                        المعدل التراكمي
+                    </h4>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-12 col-md-12 col-lg-5" for="prevHours">
+                            عدد الساعات السابقة :
+                        </label>
+                        <input class="form-control col-12 col-sm-12 col-md-12 col-lg-7" type="number" id="prevHours" value="">
+                    </div>
+                    <div id="calcType">
+                        <div class="form-group row">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-5">
+                                <input id="firstType" class="calcType" type="radio" checked value="firstType" name="calcType">
+                                <label for="firstType"> معدل التراكمي السابق :</label>
+                            </div>
+                            <input class="form-control col-12 col-sm-12 col-md-12 col-lg-7" type="text" id="prevAverage" value="">
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-5">
+                                <input id="secondType" class="calcType" type="radio" value="secondType" name="calcType">
+                                <label for="secondType">النقاط ( دقة 100% ) :</label>
+                            </div>
+                            <input class="form-control col-12 col-sm-12 col-md-12 col-lg-7" type="text" id="prevPoints" value="">
+        
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-12 col-md-6">
+                    <h4 class="text-center pb-3">
+                        نظام GPA المُستخدم
+                    </h4>
+                    <div id="systemGroup" class="px-5">
+                        <div>
+                            <label for="system4">4.00</label>
+                            <input id="system4" class="systemGrade" type="radio" checked value="4" name="systemGroup">
+                        </div>
+                        <div>
+                            <label for="system4">5.00</label>
+                            <input id="system5" class="systemGrade" type="radio" value="5" name="systemGroup">
+                        </div>
+            
+                    </div>
+                </div>
+            </div>
+            <div class="row py-4 shadow-sm">
+                <div class="col-12 col-md-6">
+                    <h4 class="text-center pb-3">
+                        نتائج التراكمي
+                    </h4>
+                    <div class="">
+                        <span>عدد الساعات :</span>
+                        <span id="totalHours">0</span>
+                    </div>
+                    <div class="">
+                        <span>عدد النقاط :</span>
+                        <span id="totalPoints">0</span>
+                    </div>
+                    <div class="">
+                        <span>المعدل :</span>
+                        <span id="totalAverage">0</span>
+                    </div>
+                    <div class="">
+                        <span>التقدير :</span>
+                        <span id="totalGrade">0</span>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <h4 class="text-center pb-3">
+                        نتائج الفصل
+                    </h4>
+                    <div class="">
+                        <span>عدد الساعات :</span>
+                        <span id="semiHours">0</span>
+                    </div>
+                    <div class="">
+                        <span>عدد النقاط :</span>
+                        <span id="semiPoints">0</span>
+                    </div>
+                    <div class="">
+                        <span>المعدل :</span>
+                        <span id="average">0</span>
+                    </div>
+                    <div class="">
+                        <span>التقدير :</span>
+                        <span id="grade">0</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row py-4 shadow-sm">
+                <div class="col-12 taxt-center table-responsive">
+                    <table class="table table-borderd" id="subjectsTable">
+                        <tr>
+                            <th>
+                                #
+                            </th>
+                            <th>
+                                أسم المادة
+                            </th>
+                            <th>
+                                عدد الساعات
+                            </th>
+                            <th>
+                                الدرجة
+                            </th>
+                            <th>
+                                عدد النقاط
+                            </th>
+                            <th>
+                                النقاط
+                            </th>
+                            <th>
+                                تحديد
+                            </th>
+                        </tr>
+                        <tr id="row1" class="subject">
+                            <td>1</td>
+                            <td>
+                                <span>
+                                    أسم المادة
+                                </span>
+                                <input type="text" value="" class="subjectName">
+                            </td>
+                            <td>
+                                <input type="number" value="0" class="hours">
+                            </td>
+                            <td>
+                                <input type="number" value="" class="degree">
+                            </td>
+                            <td>
+                                <p class="points">0</p>
+                            </td>
+                            <td>
+                                <select class="grade">
+                                    <option value="">-</option>
+                                    <option value="A+">A+</option>
+                                    <option value="A">A</option>
+                                    <option value="B+">B+</option>
+                                    <option value="B">B</option>
+                                    <option value="C+">C+</option>
+                                    <option value="C">C</option>
+                                    <option value="D+">D+</option>
+                                    <option value="D">D</option>
+                                    <option value="F">F</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="checkbox" checked="checked" class="select">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="row py-4">
+                <div class="col-4">
+                    <button id="addSubject" class="btn btn-outline-dark">
+                        إضافة مادة
+                    </button>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <p class="col-12 text-center text-muted small">
+                    برمجة سليمان العثمان 
+                </p>
+                <a class="text-dark px-1" target="_blank" title="@sulealothman twitter" href="https://www.twitter.com/sulealothman">
+                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                </a>
+                <a class="text-dark px-1" target="_blank" title="@sulealothman github" href="https://www.github.com/sulealothman">
+                    <i class="fa fa-github" aria-hidden="true"></i>
+                </a>
+                <a class="text-dark px-1" target="_blank" title="@sulealothman snapchat" href="https://www.snapchat.com/add/sulealothman">
+                    <i class="fa fa-snapchat" aria-hidden="true"></i>
+                </a>
+                <span>
+                    @sulealothman
+                </span>
+            </div>
+        </div>
+        
+
+
+        <script src="assets/jquery-3.3.1.slim.min.js"></script>
+        <script src="assets/bootstrap/bootstrap.min.js"></script>
+        <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> -->
+        <script>
+
+            let rowNum = 2;
+            let systemSelect = $("input[name='systemGroup']:checked").val();
+            let calcType = $("input[name='calcType']:checked").val();
+
+            let degrees = {'A+':100, 'A':95, 'B+':90, 'B' :80, 'C+':70, 'C':60, 'D+': 50, 'D': 40, 'F':30};
+            let grades = ['ممتاز', 'جيد جدًا','جيد','مقبول'];
+            $('#addSubject').on('click',function() {
+                let clonedRow = $('#row1').clone().prop('id', 'row' +rowNum).appendTo('#subjectsTable').find('td:first').text(rowNum);
+                rowNum += 1;
+            })
+
+
+            $(document).on('change', '.select',function (){
+                if($(this).is(':checked'))
+                    $(this).parents('tr').find('input').prop("disabled", false );
+                else
+                    $(this).parents('tr').find('input').prop("disabled", true );
+
+                calcAverage();
+                $(this).prop('disabled',false);
+            });
+
+
+
+            $(document).on('click', '#calcType', function () {
+                calcType = $("input[name='calcType']:checked").val();
+                calcAverage();
+            })
+            $(document).on('click', '#systemGroup', function () {
+                systemSelect = parseFloat($("input[name='systemGroup']:checked").val());
+                calcAverage();
+            })
+            $(document).on('change', '.prevHours', function () {
+                calcAverage();
+            });
+            $(document).on('keyup', '.prevAverage', function () {
+                calcAverage();
+            });
+            $(document).on('keyup', '.hours', function () {
+                calcAverage();
+            });
+            $(document).on('keyup', '.degree', function () {
+                let degree = $(this).val();
+                let getGrade = (degree >= 95) ? 'A+' : (degree >= 90) ? 'A' : (degree >= 85) ? 'B+' : (degree >= 80) ? 'B' : (degree >= 75) ? 'C+' : (degree >= 70) ? 'C' : (degree >= 65) ? 'D+' : (degree >= 60) ? 'D' : (degree <= 59) ? 'F' : '';
+                $(this).parent().parent().find('.grade').val(getGrade);
+                calcAverage();
+            });
+            $(document).on('change', '.grade', function () {
+                let grade = $(this).val();
+                if(grade != '') {
+                    let getDegree = (grade == 'A+') ? 95 : (grade == 'A') ? 90 : (grade == 'B+') ? 85 : (grade == 'B') ? 80 : (grade == 'C+') ? 75 : (grade == 'C') ? 70 : (grade == 'D+') ? 65 : (grade == 'D') ? 60 : (grade == 'F') ? 59 : '';
+                    $(this).parent().parent().find('.degree').val(getDegree);
+                }
+                calcAverage();
+            });
+
+            function culculateSubject(element) {
+                let hour = element.parent().parent().find('.hours').val();
+                let degree = parseInt(degrees[element.parent().parent().find('.grade').val()]);
+                if(hour != '' || isNaN(hour)) {
+                    let point = 0;
+                    point = parseFloat((hour * degree) / 100 * (systemSelect));
+                    element.find('.points').text(point);
+                    return point;
+                }
+            }
+            function calculateHours(){
+                let hours = 0;
+                $('.hours').filter(':enabled').each(function () {
+                    hours += parseInt($(this).val());
+                });
+                $('#semiHours').text(hours);
+                return hours;
+            }
+
+            function calculateTotalHours() {
+                let hours = calculateHours();
+                let prevHours = parseInt($('#prevHours').val());
+                let totalHours = ((prevHours > 0) && (!isNaN(prevHours))) ? prevHours + hours : hours;
+                $('#totalHours').text(totalHours);
+                return [hours, totalHours];
+            }
+
+            function calculatePoints() {
+                let points = 0;
+                $('.degree').filter(':enabled').each(function() {
+                    points += parseFloat(culculateSubject($(this)));
+                })
+                $('#semiPoints').text(points);
+                return points;
+            }
+            function calculateTotalPoints() {
+                let prevHours = parseInt($('#prevHours').val());
+                let points = calculatePoints();
+                let prevPoints = null;
+                if(calcType == 'firstType') {
+                    prevPoints = parseFloat($('#prevAverage').val()) * prevHours;
+                } else {
+                    prevPoints = parseFloat($('#prevPoints').val());
+                }
+                totalPoints = ((prevPoints > 0) && (!isNaN(prevPoints))) ? prevPoints + points : points;
+                $('#totalPoints').text(totalPoints);
+                return [points, totalPoints];
+            }
+
+            function getGrade(grade) {
+                if(grade >= 4.5) {
+                    return grades[0];
+                } else if(grade >= 3.75) {
+                    return grades[1];
+                } else if(grade >= 3) {
+                    return grades[2];
+                } else if(grade > 2) {
+                    return grades[3];
+                } else  {
+                    return '';
+                }
+            }
+            function calcAverage() {
+                let hours = calculateTotalHours();
+                let points = calculateTotalPoints();
+                if(hours[0] > 0 && points[0] > 0) {
+                    let average = (points[0] / hours[0]).toFixed(2);
+                    $('#grade').text(getGrade(average));
+                    $('#average').text(average);
+                } else {
+                    $('#grade').text(getGrade(0));
+                    $('#average').text(0);
+                }
+
+                if(hours[1] > 0 && points[1] > 0) {
+                    let totalAverage = (points[1] / hours[1]).toFixed(2);
+                    $('#totalGrade').text(getGrade(totalAverage));
+                    $('#totalAverage').text(totalAverage);
+                } else {
+                    $('#totalGrade').text(getGrade(0));
+                    $('#totalAverage').text(0);
+                }
+            }
+
+        </script>
+    </body>
+</html>
